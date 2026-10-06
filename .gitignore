@@ -1,0 +1,6 @@
+.env
+config/agent.yaml
+generated/
+state/
+__pycache__/
+*.pyc

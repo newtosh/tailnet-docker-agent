@@ -1,0 +1,18 @@
+# Copy to config/agent.yaml (gitignored) and edit. Everything under generated/ is rebuilt by `make render`.
+agent:
+  name: example-stack-agent        # FastMCP server name shown to clients
+  tailnet_hostname: agent-example  # Tailscale node name for this host's agent
+  mcp_port: 8000                   # internal port of the MCP server (only reachable on agentnet)
+  docker_gid: 999                  # group id that owns the Docker socket on this host (Linux: `getent group docker`)
+  # build: https://github.com/<you>/tailnet-docker-agent.git#v0.1.0:server   # optional: build from a pinned git ref instead of local ./server
+
+# Containers the agent may see. Listed containers are readable (status, logs).
+# `actions` grants mutating operations; anything not listed is denied at both
+# the MCP server and the socket proxy.
+containers:
+  - name: example-web
+    actions: [restart]
+  - name: example-worker
+    actions: [start, stop, restart]
+  - name: example-db            # read-only: status and logs only
+    actions: []
